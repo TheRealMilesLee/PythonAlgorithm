@@ -7,6 +7,7 @@ Another hash map implementation, with a good explanation.
 Modern Dictionaries by Raymond Hettinger
 https://www.youtube.com/watch?v=p33CVV29OG8
 """
+
 from collections.abc import Iterator, MutableMapping
 from dataclasses import dataclass
 from typing import Generic, TypeVar
@@ -242,6 +243,25 @@ class HashMap(MutableMapping[KEY, VAL]):
             self._size_down()
 
     def __getitem__(self, key: KEY) -> VAL:
+        """
+        Returns the item at the given key
+
+        >>> hm = HashMap(5)
+        >>> hm._add_item(1, 10)
+        >>> hm.__getitem__(1)
+        10
+
+        >>> hm = HashMap(5)
+        >>> hm._add_item(10, -10)
+        >>> hm._add_item(20, -20)
+        >>> hm.__getitem__(20)
+        -20
+
+        >>> hm = HashMap(5)
+        >>> hm._add_item(-1, 10)
+        >>> hm.__getitem__(-1)
+        10
+        """
         for ind in self._iterate_buckets(key):
             item = self._buckets[ind]
             if item is None:
@@ -253,6 +273,20 @@ class HashMap(MutableMapping[KEY, VAL]):
         raise KeyError(key)
 
     def __len__(self) -> int:
+        """
+        Returns the number of items present in hashmap
+
+        >>> hm = HashMap(5)
+        >>> hm._add_item(1, 10)
+        >>> hm._add_item(2, 20)
+        >>> hm._add_item(3, 30)
+        >>> hm.__len__()
+        3
+
+        >>> hm = HashMap(5)
+        >>> hm.__len__()
+        0
+        """
         return self._len
 
     def __iter__(self) -> Iterator[KEY]:

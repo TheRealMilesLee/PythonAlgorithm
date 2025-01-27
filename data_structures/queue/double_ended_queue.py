@@ -1,6 +1,7 @@
 """
 Implementation of double ended queue.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -32,7 +33,7 @@ class Deque:
         the number of nodes
     """
 
-    __slots__ = ("_front", "_back", "_len")
+    __slots__ = ("_back", "_front", "_len")
 
     @dataclass
     class _Node:
